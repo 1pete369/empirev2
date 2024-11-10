@@ -1,0 +1,54 @@
+{
+  "customData": {
+    "Days": [
+      {
+        "date": "2024-11-10",
+        "todos": [
+          { "title": "Buy groceries", "completed": false },
+          { "title": "Read 20 pages", "completed": true }
+        ],
+        "workouts": [
+          { "name": "Push-ups", "reps": 20 },
+          { "name": "Jogging", "duration": "30 mins" }
+        ]
+      },
+      {
+        "date": "2024-11-11",
+        "todos": [
+          { "title": "Write a blog post", "completed": false },
+          { "title": "Workout", "completed": true }
+        ],
+        "workouts": [
+          { "name": "Squats", "reps": 15 },
+          { "name": "Plank", "duration": "2 mins" }
+        ]
+      }
+    ],
+    "streak": 0,
+    "goals": []
+  }
+}
+
+
+{
+  uid: string
+  email: string
+  displayName?: string | null
+  username?: string
+  photoURL?: string
+  provider: "google" | "email"
+  isEmailVerified: boolean
+  createdAt: Date
+  lastLoginAt: Date
+  customData?: {
+    preferences?: any
+    streak?: number
+    goals?: string[]
+    days : [{
+      dateId : string 
+      date : string
+      todos : [Todo]
+      dayCompleted : boolean
+    }]
+  }
+}

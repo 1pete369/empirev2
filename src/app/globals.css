@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+::-webkit-scrollbar{
+    appearance: none;
+    width: 4px;
+    height: 4px;
+}
+::-webkit-scrollbar-track{
+    width: 1px;
+    background: gray;
+}
+::-webkit-scrollbar-thumb{
+    background: rgb(55, 55, 55);
+}
+
+.custom-checkbox {
+    -webkit-appearance: none; /* Remove default checkbox appearance */
+    -moz-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #bbb;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+
+  /* Optional checkmark icon for when checked */
+  .custom-checkbox:checked::after {
+    content: '✔';
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+  }
+
+  .custom-checkbox:checked{
+    background-color: ;
+  }

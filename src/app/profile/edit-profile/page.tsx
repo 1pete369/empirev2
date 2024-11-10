@@ -92,13 +92,12 @@ export default function EditProfilePage() {
         className="rounded-sm bg-sky-500 text-sky-100 px-2 py-1.5 flex-1 min-w-60"
         disabled={isLoading} // Disable button when loading
       >
-        {isLoading ? "Updating..." : "Update"}{" "}
-        {/* Change button text on loading */}
+        {isLoading ? "Updating..." : "Update"}
       </button>
       <p>
-        Don't want to update?{" "}
-        <span className="text-sm text-sky-500 underline">
-          <Link href={"/profile"}>Go back!</Link>
+        Don't want to update?
+        <span className="text-sm text-sky-500 underline ml-1">
+          <Link href={"/profile"}> Go back!</Link>
         </span>
       </p>
     </form>

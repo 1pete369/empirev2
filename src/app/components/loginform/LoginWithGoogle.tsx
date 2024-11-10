@@ -7,7 +7,6 @@ import { redirect } from "next/navigation";
 
 export default function Page() { 
   const [isLoading, setIsLoading] = useState(false); // State to manage loading status
-  const [error, setError] = useState(''); // State to manage error messages
 
   const { user, handleGoogleLogin } = useUserContext() 
 

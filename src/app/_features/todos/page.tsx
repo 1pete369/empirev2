@@ -2,8 +2,7 @@
 
 import { useUserContext } from "@/app/contexts/UserDataProviderContext"
 import { deleteTodo, getTodos, patchTodo, postTodo } from "@/app/dbfunctions/todos"
-import { redirect } from "next/navigation"
-import React, { act, useEffect, useReducer, useState } from "react"
+import React, { useEffect, useReducer, useState } from "react"
 import { FaTrash } from "react-icons/fa"
 
 
@@ -139,7 +138,7 @@ export default function TodosPage() {
 
   const handleCheckTodo=async (todo : Todo)=>{
     dispatch({ type :"CheckTodo", id : todo.id})
-    var updatedTodo : Todo ={  ...todo,
+    let updatedTodo : Todo ={  ...todo,
       completed : todo.completed ? false : true ,
       status : todo.completed ? "pending" : "completed"
     }
@@ -153,7 +152,7 @@ export default function TodosPage() {
   }
 
   const handlePostTodo=async (todoname: string)=>{
-    var uid =""
+    let uid =""
     if(user){ 
       uid = user.uid
     }

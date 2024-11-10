@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { useRouter } from 'next/navigation'; // Import useRouter for client-side redirects
+import React from "react";
 import RegisterWithGoogle from "../../components/registerform/RegisterWithGoogle";
 import RegisterWithForm from "../../components/registerform/RegisterWithForm";
 // import { useUser } from "@/app/contexts/UserProviderContext";

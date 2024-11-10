@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import LoginWithForm from "../../components/loginform/LoginWithForm";
 import LoginWithGoogle from "../../components/loginform/LoginWithGoogle";
-import { redirect } from "next/navigation"; // Import redirect from next/navigation
 // import { useUser } from "@/app/contexts/UserProviderContext";
 
 export default function LoginPage() {

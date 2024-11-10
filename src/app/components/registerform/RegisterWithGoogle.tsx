@@ -8,7 +8,7 @@ export default function Page() {
 
   const [isLoading, setIsLoading] = useState(false); // State to manage loading status
 
-  const {handleGoogleLogin , error} = useUserContext()
+  const {handleGoogleLogin } = useUserContext()
 
   const handleLoginClick=async()=>{
     setIsLoading(true)

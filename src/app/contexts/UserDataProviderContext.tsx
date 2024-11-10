@@ -2,8 +2,8 @@
 
 import { FirebaseError } from "firebase/app"
 import { auth } from "../firebase/firebase"
-import { GoogleAuthProvider, signInWithPopup, User as FirebaseUser, signOut, onAuthStateChanged, signInWithCredential, createUserWithEmailAndPassword, signInWithEmailAndPassword, fetchSignInMethodsForEmail} from "firebase/auth"
-import React, { createContext, use, useContext, useEffect, useState } from "react"
+import { GoogleAuthProvider, signInWithPopup, User as FirebaseUser, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth"
+import React, { createContext, useContext, useEffect, useState } from "react"
 import { checkUserNameExist, createUser, fetchUser, updateUserProfile } from "../dbfunctions/users"
 import createOrUpdateDayObject from "../dbfunctions/days"
 
@@ -127,7 +127,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     try {
         const provider = new GoogleAuthProvider()
         await signInWithPopup(auth,provider)
-    } catch (err) {
+    } catch (err : unknown){
+      if(err instanceof Error){
+        console.log(err)
+      }
         setError("Something wrong, Try again later!")
     }
   }
@@ -164,8 +167,10 @@ const isValidEmail = (email: string) => {
       if(response){
         setUser(response.userObject);
       }
-    }catch(err){
-      console.log(err)
+    }catch(err : unknown){
+      if(err instanceof Error){
+        console.log("Error",err)
+      }
     }
   }
 
@@ -256,8 +261,10 @@ const handleEmailLogin=async(email : string, password : string)=>{
         await signOut(auth)
         setUser(null)
         setError(null)
-    }catch(err){
+    }catch(err : unknown){
+      if(err instanceof Error){
         alert(err)
+      }
     }
   }
 

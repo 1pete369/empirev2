@@ -9,8 +9,8 @@ export async function checkUser(user: MainUserObject) {
       )
     ).data
     return response.exist
-  } catch (err) {
-    console.log(err)
+  } catch (error) {
+    console.log(error)
   }
 }
 
@@ -22,8 +22,8 @@ export async function checkUserNameExist(username: string) {
       )
     ).data
     return response.exist
-  } catch (err) {
-    console.log(err)
+  } catch (error) {
+    console.log(error)
   }
 }
 
@@ -38,8 +38,8 @@ export async function createUser(user: MainUserObject) {
         { user }
       )
       console.log(response)
-    } catch (err) {
-      console.log(err)
+    } catch (error) {
+      console.log(error)
     }
   }
 }
@@ -86,8 +86,8 @@ export async function updateUserProfile(
     console.log("response", response)
 
     return response
-  } catch (err: any) {
-    console.log(err.message)
+  } catch (error) {
+    console.log(error)
   }
 }
 
@@ -95,7 +95,7 @@ export async function updateUserProfile(
 //   const date = new Date().toISOString()
 //   try{
 
-//   }catch(err){
+//   }catch(error){
 
 //   }
 // }

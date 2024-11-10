@@ -32,8 +32,10 @@ export async function postTodo(todo: Todo, user: MainUserObject) {
             console.log("Todo id added to day", response2)
         }
     }
-  } catch (err: any) {
-    console.log(err.message)
+  } catch (err : unknown) {
+    if(err instanceof Error){
+        console.log(err.message)
+    }
   }
 }
 
@@ -49,8 +51,10 @@ export async function patchTodo(todo: Todo) {
       )
     ).data
     console.log("Updated Todo response", response)
-  } catch (err: any) {
-    console.log(err.message)
+  } catch (err : unknown) {
+    if(err instanceof Error){
+        console.log(err.message)
+    }
   }
 }
 
@@ -63,20 +67,24 @@ export async function deleteTodo(todo: Todo) {
       )
     ).data
     console.log(response)
-  } catch (err: any) {
-    console.log(err.message)
+  } catch (err : unknown) {
+    if(err instanceof Error){
+        console.log(err.message)
+    }
   }
 }
 
 export async function getTodos(user : MainUserObject) {
-    
+
   console.log("Get todos called")
   try {
     const response = (
       await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/todos/get-todos/${user.uid}`)
     ).data
     return response.todos
-  } catch (err: any) {
-    console.log(err.message)
+  } catch (err : unknown) {
+    if(err instanceof Error){
+        console.log(err.message)
+    }
   }
 }

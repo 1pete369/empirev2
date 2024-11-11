@@ -63,31 +63,26 @@ export async function fetchUser(uid: string) {
   }
 }
 
-export async function updateUserProfile(
-  uid: string,
-  username: string,
-  name: string
-) {
-  console.log("Came to upadte profile")
+export async function updateUserProfile(uid : string, username :string, name:string) {
+  console.log("Came to update profile");
 
-  const updateFields = { username: username, name: name }
-  console.log(updateFields)
+  // Wrap username and name in an updateFields object
+  const updateFields = { updateFields: { username, name } };
+  console.log("Payload:", updateFields);
 
   try {
-    console.log("Started")
-    const response = (
-      await axios.patch(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/update-profile/${uid}`,
-         updateFields 
-      )
-    ).data
-    console.log("Completed")
+    console.log("Started");
+    const response = await axios.patch(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/update-profile/${uid}`,
+      updateFields
+    );
+    console.log("Completed");
 
-    console.log("response", response)
+    console.log("response", response.data);
 
-    return response
+    return response.data;
   } catch (error) {
-    console.log(error)
+    console.error("Error updating profile:", error);
   }
 }
 

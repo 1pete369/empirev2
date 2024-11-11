@@ -6,13 +6,12 @@ import Link from "next/link";
 import { useUserContext } from "../contexts/UserDataProviderContext";
 
 export default function ProfilePage() {
-  const { user, handleLogout } = useUserContext();
-  // const [isLoading, setIsLoading]= useState(false)
+  const { user, handleLogout , profileIsLoading} = useUserContext();
 
   return (
     <div className="text-lg p-4 w-full space-y-2">
       <span className="text-xl font-semibold">Profile page</span>
-      {user === null ? (
+      {user === null ? ( profileIsLoading ? <p>Loading...</p> :
         <p>User not logged in!</p>
       ) : (
         <div className="flex justify-between p-4 shadow-md rounded-sm max-w-sm border-2 border-solid box-border">

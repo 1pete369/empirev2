@@ -38,6 +38,8 @@ export type MainUserObject = {
 type UserContextType = {
   user: MainUserObject | null
   setError: React.Dispatch<React.SetStateAction<string | null>>
+  profileIsLoading : Boolean
+  // setProfileIsLoading : React.Dispatch<React.SetStateAction<boolean>>
   handleGoogleLogin: () => Promise<void>
   handleLogout: () => Promise<void>
   handleProfileUpdate: (
@@ -121,6 +123,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     // Declarations
   const [user, setUser] = useState<MainUserObject | null>(null)
   const [error, setError ] = useState<string | null>(null)
+  const [profileIsLoading, setProfileIsLoading] = useState(false)
 
 //   Google Logic
   const handleGoogleLogin = async () => {
@@ -160,7 +163,7 @@ const isValidEmail = (email: string) => {
     } else if (await checkUserNameExist(username) && username !== user?.username) {
       error = "Username already exists!";
     }
-    
+
     if(error!==""){
       setError(error)
       return
@@ -291,17 +294,21 @@ const handleEmailLogin=async(email : string, password : string)=>{
             const MainUserObject = await mapFirebaseUserToMainUserObjectForGoogle(firebaseUser)
             const isAlreadyExists = await checkUser(MainUserObject)
             if(isAlreadyExists){
+              setProfileIsLoading(true)
               const MainUserObjectExisted = await fetchUser(firebaseUser.uid);
               setUser(MainUserObjectExisted)
+              setProfileIsLoading(false)
             }else{
               setUser(MainUserObject)
               await createUser(MainUserObject)
             }
           }
           if(firebaseUser.providerData[0].providerId !== "google.com"){
+            setProfileIsLoading(true)
             // const MainUser = await updateLastLoginAt(firebaseUser.uid)
             const MainUserObject = await fetchUser(firebaseUser.uid);
             setUser(MainUserObject);
+            setProfileIsLoading(false)
           }
         }else{
             setUser(null)
@@ -312,7 +319,7 @@ const handleEmailLogin=async(email : string, password : string)=>{
 
 
   return (
-    <userContext.Provider value ={{ user , handleGoogleLogin , handleLogout, handleEmailSignup , handleEmailLogin , error , setError , handleProfileUpdate }}>{children}</userContext.Provider>
+    <userContext.Provider value ={{ user , profileIsLoading , handleGoogleLogin , handleLogout, handleEmailSignup , handleEmailLogin , error , setError , handleProfileUpdate }}>{children}</userContext.Provider>
   )
 }
 

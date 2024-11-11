@@ -13,7 +13,9 @@ export default function Page() {
   const handleLoginClick = async () => {
     setIsLoading(true)
     await handleGoogleLogin()
-    setIsLoading(false)
+    if(user!==null){
+      setIsLoading(false)
+    }
   };
 
   useEffect(()=>{

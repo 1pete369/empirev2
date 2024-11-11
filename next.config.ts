@@ -3,27 +3,13 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https', // Protocol specification
-        hostname: 'lh3.googleusercontent.com', // Hostname specification
-        pathname: '/**', // Allow all paths
+        protocol: 'https', // Define the protocol
+        hostname: 'lh3.googleusercontent.com', // Define the hostname
+        pathname: '/**', // Define the path (wildcard to allow any image from the domain)
       },
     ],
-    domains: ['picsum.photos'], // Add additional domains as needed
+   domains: ['picsum.photos'],
   },
-  async headers() {
-    return [
-      {
-        // Applies CORS headers to all API routes
-        source: "/api/:path*",
-        headers: [
-          { key: "Access-Control-Allow-Credentials", value: "true" },
-          { key: "Access-Control-Allow-Origin", value: "*" }, // Replace "*" with your domain if needed
-          { key: "Access-Control-Allow-Methods", value: "GET,OPTIONS,PATCH,DELETE,POST,PUT" },
-          { key: "Access-Control-Allow-Headers", value: "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" },
-        ]
-      }
-    ]
-  }
 };
 
-module.exports = nextConfig;
+export default nextConfig;

@@ -1,12 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useUserContext } from "../contexts/UserDataProviderContext";
 
 export default function ProfilePage() {
   const { user, handleLogout } = useUserContext();
+  // const [isLoading, setIsLoading]= useState(false)
 
   return (
     <div className="text-lg p-4 w-full space-y-2">
@@ -30,13 +31,13 @@ export default function ProfilePage() {
             )}
             </div>
           </div>
-            <p>UserName: {user?.username}</p>
-            <p>DisplayName: {user?.displayName}</p>
-            <p>Email: {user?.email}</p>
-            <p>Uid: {user?.uid}</p>
-            <p>Provider: {user?.provider}</p>
-            <p>CreatedAt: {new Date(user?.createdAt).toLocaleDateString()}</p>
-            <p>LastLoginAt: {new Date(user?.lastLoginAt).toLocaleDateString()}</p>
+            <p className="flex gap-2"><span className=" font-semibold underline">UserName:</span><span className=" text-slate-600">{user?.username}</span></p>
+            <p className="flex gap-2"><span className=" font-semibold underline">DisplayName:</span><span className=" text-slate-600">{user?.displayName}</span></p>
+            <p className="flex gap-2"><span className=" font-semibold underline">Email:</span><span className=" text-slate-600">{user?.email}</span></p>
+            <p className="flex gap-2"><span className=" font-semibold underline">Uid:</span><span className=" text-slate-600">{user?.uid}</span></p>
+            <p className="flex gap-2"><span className=" font-semibold underline">Provider:</span><span className=" text-slate-600">{user?.provider}</span></p>
+            <p className="flex gap-2"><span className=" font-semibold underline">CreatedAt:</span><span className=" text-slate-600">{new Date(user?.createdAt).toLocaleDateString()}</span></p>
+            <p className="flex gap-2"><span className=" font-semibold underline">LastLoginAt:</span><span className=" text-slate-600">{new Date(user?.lastLoginAt).toLocaleDateString()}</span></p>
             <div className="flex gap-2 flex-wrap">
             <button
               className="bg-slate-800 p-2.5 min-w-[200px] max-w-[200px] rounded text-white text-lg text-center shadow-md"

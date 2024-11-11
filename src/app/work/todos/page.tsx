@@ -7,10 +7,12 @@ import React, { useEffect } from "react"
 export default function TodosWorkSpace() {
   const { user } = useUserContext()
   useEffect(() => {
-    if (user === null) {
-      redirect("/")
-    }
-  }, [])
+    setTimeout(() => {
+      if (user === null) {
+        redirect("/")
+      }
+    }, 3000);
+  }, [user])
   return (
     <div className="container w-full p-4 flex flex-col gap-4 mx-auto">
       <TodosPage />

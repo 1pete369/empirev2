@@ -1,12 +1,18 @@
 "use client"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import React from "react"
+import React, { useEffect, useState } from "react"
 
 export default function Navbar() {
 
+  const [path,setPath]= useState<string | null>(null)
+
   const router= useRouter()
-  const path = router.pathname.split('/')[1]
+
+  useEffect(()=>{
+    const pathName = router.pathname.split('/')[1]
+    setPath(pathName)
+  },[router.pathname,path])
 
   return (
     <div className="p-4 mx-auto flex justify-center items-center">

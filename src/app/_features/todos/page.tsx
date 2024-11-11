@@ -248,19 +248,21 @@ export default function TodosPage() {
 
       <div className="mt-4 max-h-[400px] max-w-full overflow-y-auto">
         <div className="w-full flex flex-col gap-2">
-          <div className="w-full flex gap-1 bg-slate-200">
+          <div className="w-full flex gap-1 justify-between bg-slate-200">
             <div className="p-2 text-left w-[100px] sm:w-1/2">Task</div>
+            <div className="flex gap-0.5 justify-between mr-2">
             <div className="p-2 text-center w-[35px] sm:w-[40p]">
               ✅
             </div>
             <div className="p-2 text-center w-[52px]">Delete</div>
             <div className="p-2 text-center w-[52px]">Status</div>
+            </div>
           </div>
           {state.length > 0 ? (
             state.map((todo) => {
               return (
                 <div
-                  className="flex gap-1 items-center bg-sky-100"
+                  className="flex gap-1 justify-between items-center bg-sky-100"
                   key={todo.id}
                 >
                   <div
@@ -270,6 +272,8 @@ export default function TodosPage() {
                   >
                     {todo.name}
                   </div>
+            <div className="flex justify-between mr-2">
+
                   <div className="p-2 text-center w-[40px] sm:w-[40p] flex justify-center items-center">
                     <input
                       type="checkbox"
@@ -295,6 +299,7 @@ export default function TodosPage() {
                       : todo.status === "completed"
                       ? "🟢"
                       : "🔴"}
+                  </div>
                   </div>
                 </div>
               )

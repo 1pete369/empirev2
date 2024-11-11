@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react'
 export default function EditProfilePage() {
 
     const [username,setUsername] = useState("")
-    const [name,setName] = useState("")
+    const [displayName,setDisplayName] = useState("")
     const [success,setSuccess] = useState("")
     const [isLoading,setIsLoading] = useState(false)
 
@@ -19,7 +19,7 @@ export default function EditProfilePage() {
         setSuccess('')
         setIsLoading(true)
         if(user!==null){
-             await handleProfileUpdate(user.uid,user.email, username, name)
+             await handleProfileUpdate(user.uid,user.email, username, displayName)
         }
         setSuccess("Update successful!")
         setIsLoading(false)
@@ -33,6 +33,8 @@ export default function EditProfilePage() {
 
   return (
     <div className=' h-screen text-lg p-4 flex items-center justify-center overflow-hidden'>
+       {
+        user!==null &&
       <form
       onSubmit={handleSubmit}
       className="p-4 flex flex-col gap-6 items-center shadow-md rounded-sm box-border"
@@ -41,7 +43,8 @@ export default function EditProfilePage() {
       {error && <p className="text-red-500">{error}</p>}
       {/* Display error from context */}
       {error === '' && <p className="text-green-500">{success}</p>}
-      {/* Display success message */}
+      {/* Display success message */} 
+
       <div className="flex gap-6 items-center justify-center">
         <label htmlFor="username" className="hidden">
           UserName:
@@ -51,27 +54,26 @@ export default function EditProfilePage() {
           type="text"
           id="username"
           className={`rounded-sm border-2 border-solid border-black/30 focus-within:border-black outline-none px-2 py-1.5 placeholder:text-stone-500 text-black min-w-60 ${username!=="" && "bg-sky-100"}`}
-          placeholder="Enter username"
+          placeholder={user.username}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
       <div className="flex gap-6 items-center justify-center">
-        <label htmlFor="name" className="hidden">
+        <label htmlFor="displayName" className="hidden">
           Name:
         </label>
         <input
           required
-          type="name"
-          id="name"
-          className={`rounded-sm border-2 border-solid border-black/30 focus-within:border-black outline-none px-2 py-1.5 placeholder:text-stone-500 text-black min-w-60 ${name!=="" && "bg-sky-100"}`}
-          placeholder="Enter name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          type="displayName"
+          id="displayName"
+          className={`rounded-sm border-2 border-solid border-black/30 focus-within:border-black outline-none px-2 py-1.5 placeholder:text-stone-500 text-black min-w-60 ${displayName!=="" && "bg-sky-100"}`}
+          placeholder={user.displayName as string}
+          value={displayName}
+          onChange={(e) => setDisplayName(e.target.value)}
         />
       </div>
-      {
-        user?.provider === "email" &&
+      
           <div className="flex gap-6 items-center justify-center">
         <label htmlFor="email" className="hidden">
           Email:
@@ -86,7 +88,6 @@ export default function EditProfilePage() {
           disabled
           />
       </div>
-        }
       <button
         type="submit"
         className="rounded-sm bg-sky-500 text-sky-100 px-2 py-1.5 flex-1 min-w-60"
@@ -101,6 +102,7 @@ export default function EditProfilePage() {
         </span>
       </p>
     </form>
+        }
     </div>
   )
 }

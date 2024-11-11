@@ -15,7 +15,7 @@ export default function ProfilePage() {
       {user === null ? (
         <p>User not logged in!</p>
       ) : (
-        <div className="flex justify-between p-4 shadow-md rounded-sm max-w-lg border-2 border-solid box-border">
+        <div className="flex justify-between p-4 shadow-md rounded-sm max-w-sm border-2 border-solid box-border">
           <div className="flex gap-1 flex-col leading-8">
             <div className=" flex justify-between">
             <h2 className="underline">User Details</h2>

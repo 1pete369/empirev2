@@ -145,17 +145,23 @@ const isValidEmail = (email: string) => {
     return /^[a-zA-Z0-9_]+$/.test(username);
   }
 
-  const handleProfileUpdate=async (uid :string,email: string, username: string , name: string)=>{
+  const handleProfileUpdate=async (uid :string,email: string, username: string , displayName: string)=>{
     let error = "";
-    if (name.length < 3) {
+    console.log("came to proile update")
+    console.log("username passed",username)
+    console.log("user username", user?.username)
+
+    if (displayName.length < 3) {
       error = "Name must be at least 3 characters long!";
     } else if (username.length < 8) {
       error = "Username must be at least 8 characters long!";
-    } else if (await checkUserNameExist(username)){
-      error = "Username already exists!"
+    } else if (username === user?.username && displayName === user?.displayName) {
+      error = "No changes detected!";
+    } else if (await checkUserNameExist(username) && username !== user?.username) {
+      error = "Username already exists!";
     }
     
-    if(error){
+    if(error!==""){
       setError(error)
       return
     }
@@ -163,7 +169,7 @@ const isValidEmail = (email: string) => {
     setError('')
     
     try{
-      const response = await updateUserProfile(uid,username,name)
+      const response = await updateUserProfile(uid,username,displayName)
       if(response){
         setUser(response.userObject);
       }

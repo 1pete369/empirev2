@@ -290,18 +290,18 @@ const handleEmailLogin=async(email : string, password : string)=>{
   useEffect(()=>{
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser)=>{
         if(firebaseUser && user===null){
+          setProfileIsLoading(true)
           if(firebaseUser.providerData[0].providerId === "google.com"){
             const MainUserObject = await mapFirebaseUserToMainUserObjectForGoogle(firebaseUser)
             const isAlreadyExists = await checkUser(MainUserObject)
             if(isAlreadyExists){
-              setProfileIsLoading(true)
               const MainUserObjectExisted = await fetchUser(firebaseUser.uid);
               setUser(MainUserObjectExisted)
-              setProfileIsLoading(false)
             }else{
               setUser(MainUserObject)
               await createUser(MainUserObject)
             }
+            setProfileIsLoading(false)
           }
           if(firebaseUser.providerData[0].providerId !== "google.com"){
             setProfileIsLoading(true)

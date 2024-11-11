@@ -1,15 +1,26 @@
+"use client"
+
 import Link from "next/link";
+import { useUserContext } from "./contexts/UserDataProviderContext";
 
 export default function Home() {
+
+  const {user}= useUserContext()
+
   return (
     <div className="bg-gray-100 text-gray-800 min-h-screen select-none">
     {/* Hero Section */}
     <header className="bg-blue-600 text-white py-20 px-4 text-center">
       <h1 className="text-4xl font-bold mb-4">Welcome to <span className=" text-black text-4xl">Your Productivity Hub</span></h1>
       <p className="text-lg mb-6">Stay accountable, achieve your goals, and join a motivated community</p>
+      {user ===null ?
       <Link href="/auth/register" className="bg-white text-blue-600 px-6 py-3 rounded-lg shadow-lg font-semibold hover:bg-gray-100 transition">
-        Get Started
-      </Link>
+      Get Started
+    </Link>
+    :<Link href="/work" className="bg-white text-blue-600 px-6 py-3 rounded-lg shadow-lg font-semibold hover:bg-gray-100 transition">
+    Visit Workspace
+  </Link>
+      }
     </header>
 
     {/* Features Section */}
@@ -47,9 +58,12 @@ export default function Home() {
     <section className="bg-blue-600 text-white py-16 px-4 text-center">
       <h2 className="text-3xl font-bold mb-4">Ready to Transform Your Productivity?</h2>
       <p className="text-lg mb-6">Take the first step towards a more organized, goal-driven life.</p>
-      <Link href="/auth/register" className="bg-white text-blue-600 px-6 py-3 rounded-lg shadow-lg font-semibold hover:bg-gray-100 transition">
+      {user===null ?<Link href="/auth/register" className="bg-white text-blue-600 px-6 py-3 rounded-lg shadow-lg font-semibold hover:bg-gray-100 transition">
         Join Now
       </Link>
+      :<Link href="/work" className="bg-white text-blue-600 px-6 py-3 rounded-lg shadow-lg font-semibold hover:bg-gray-100 transition">
+        Visit Workspace
+      </Link>}
     </section>
 
     {/* Footer */}

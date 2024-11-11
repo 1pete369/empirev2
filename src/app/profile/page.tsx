@@ -14,7 +14,7 @@ export default function ProfilePage() {
       {user === null ? ( profileIsLoading ? <p>Loading...</p> :
         <p>User not logged in!</p>
       ) : (
-        <div className="flex justify-between p-4 shadow-md rounded-sm max-w-lg border-2 border-solid box-border">
+        <div className="flex justify-between p-4 shadow-md rounded-sm max-w-lg border-2 border-solid box-border ">
           <div className="flex gap-1 flex-col leading-8">
             <div className=" flex justify-between mr-6">
             <h2 className="underline">User Details</h2>
@@ -30,13 +30,13 @@ export default function ProfilePage() {
             )}
             </div>
           </div>
-            <p className="flex gap-2"><span className=" font-semibold underline">UserName:</span><span className=" text-slate-600">{user?.username}</span></p>
-            <p className="flex gap-2"><span className=" font-semibold underline">DisplayName:</span><span className=" text-slate-600">{user?.displayName}</span></p>
-            <p className="flex gap-2"><span className=" font-semibold underline">Email:</span><span className=" text-slate-600">{user?.email}</span></p>
-            <p className="flex gap-2"><span className=" font-semibold underline">Uid:</span><span className=" text-slate-600">{user?.uid}</span></p>
-            <p className="flex gap-2"><span className=" font-semibold underline">Provider:</span><span className=" text-slate-600">{user?.provider}</span></p>
-            <p className="flex gap-2"><span className=" font-semibold underline">CreatedAt:</span><span className=" text-slate-600">{new Date(user?.createdAt).toLocaleDateString()}</span></p>
-            <p className="flex gap-2"><span className=" font-semibold underline">LastLoginAt:</span><span className=" text-slate-600">{new Date(user?.lastLoginAt).toLocaleDateString()}</span></p>
+            <p className="flex gap-2"><span className=" font-semibold underline">UserName:</span><span className=" text-slate-600 ">{user?.username}</span></p>
+            <p className="flex gap-2"><span className=" font-semibold underline">DisplayName:</span><span className=" text-slate-600 ">{user?.displayName}</span></p>
+            <p className="flex gap-2"><span className=" font-semibold underline">Email:</span><span className=" text-slate-600 ">{user?.email}</span></p>
+            {/* <p className="flex gap-2"><span className=" font-semibold underline">Uid:</span><span className=" text-slate-600 ">{user?.uid}</span></p> */}
+            <p className="flex gap-2"><span className=" font-semibold underline">Provider:</span><span className=" text-slate-600 ">{user?.provider}</span></p>
+            <p className="flex gap-2"><span className=" font-semibold underline">CreatedAt:</span><span className=" text-slate-600 ">{new Date(user?.createdAt).toLocaleDateString()}</span></p>
+            <p className="flex gap-2"><span className=" font-semibold underline">LastLoginAt:</span><span className=" text-slate-600 ">{new Date(user?.lastLoginAt).toLocaleDateString()}</span></p>
             <div className="flex gap-2 flex-wrap">
             <button
               className="bg-slate-800 p-2.5 min-w-[200px] max-w-[200px] rounded text-white text-lg text-center shadow-md"

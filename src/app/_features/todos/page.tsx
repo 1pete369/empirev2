@@ -249,7 +249,7 @@ export default function TodosPage() {
       <div className="mt-4 max-h-[400px] max-w-full overflow-y-auto">
         <div className="w-full flex flex-col gap-2">
           <div className="w-full flex gap-1 justify-between bg-slate-200">
-            <div className="p-2 text-left w-[100px] sm:w-1/2">Task</div>
+            <div className="p-2 text-left w-[130px] sm:w-1/2">Task</div>
             <div className="flex gap-0.5 justify-between mr-2">
             <div className="py-2 text-center w-[35px] sm:w-[40p]">
               ✅
@@ -266,7 +266,7 @@ export default function TodosPage() {
                   key={todo.id}
                 >
                   <div
-                    className={`p-2 text-left w-[100px] sm:w-1/2  break-words bg-red-100 ${
+                    className={`p-2 text-left w-[130px] sm:w-1/2  break-words bg-red-100 ${
                       todo.completed && " line-through"
                     }`}
                   >

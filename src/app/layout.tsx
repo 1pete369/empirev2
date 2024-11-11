@@ -5,7 +5,7 @@ import { UserProvider } from "./contexts/UserDataProviderContext";
 
 
 export const metadata: Metadata = {
-  title: "Build Dream",
+  title: "Your productivity hub",
   description: "Productivity App",
 };
 

@@ -172,7 +172,7 @@ const isValidEmail = (email: string) => {
     setError('')
     
     try{
-      const response = await updateUserProfile(uid,username,displayName)
+      const response = await updateUserProfile(uid,username.toLowerCase(),displayName)
       if(response){
         setUser(response.userObject);
       }

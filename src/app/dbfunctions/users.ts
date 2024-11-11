@@ -67,7 +67,7 @@ export async function updateUserProfile(uid : string, username :string, name:str
   console.log("Came to update profile");
 
   // Wrap username and name in an updateFields object
-  const updateFields = { updateFields: { username, name } };
+  const updateFields = { updateFields: { username , name } };
   console.log("Payload:", updateFields);
 
   try {

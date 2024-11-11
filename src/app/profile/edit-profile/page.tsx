@@ -53,7 +53,7 @@ export default function EditProfilePage() {
           required
           type="text"
           id="username"
-          className={`rounded-sm border-2 border-solid border-black/30 focus-within:border-black outline-none px-2 py-1.5 placeholder:text-stone-500 text-black min-w-60 ${username!=="" && "bg-sky-100"}`}
+          className={`rounded-sm border-2 border-solid border-black/30 focus-within:border-black outline-none px-2 py-1.5 placeholder:text-stone-500 text-black min-w-60 lowercase ${username!=="" && "bg-sky-100"}`}
           placeholder={user.username}
           value={username}
           onChange={(e) => setUsername(e.target.value)}

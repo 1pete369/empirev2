@@ -249,12 +249,12 @@ export default function TodosPage() {
       <div className="mt-4 max-h-[400px] max-w-full overflow-y-auto">
         <div className="w-full flex flex-col gap-2">
           <div className="w-full flex gap-1 bg-slate-200">
-            <div className="p-2 text-left w-[95px]">Task</div>
-            <div className="p-2 text-center w-[40px]">
+            <div className="p-2 text-left w-[100px] sm:w-1/2">Task</div>
+            <div className="p-2 text-center w-[35px] sm:w-[40p]">
               ✅
             </div>
-            <div className="p-2 text-center flex-1">Delete</div>
-            <div className="p-2 text-center flex-1">Status</div>
+            <div className="p-2 text-center w-[52px]">Delete</div>
+            <div className="p-2 text-center w-[52px]">Status</div>
           </div>
           {state.length > 0 ? (
             state.map((todo) => {
@@ -264,13 +264,13 @@ export default function TodosPage() {
                   key={todo.id}
                 >
                   <div
-                    className={`p-2 text-left w-[95px]  break-words ${
+                    className={`p-2 text-left w-[100px] sm:w-1/2  break-words ${
                       todo.completed && " line-through"
                     }`}
                   >
                     {todo.name}
                   </div>
-                  <div className="p-2 text-center w-[40px] flex justify-center items-center">
+                  <div className="p-2 text-center w-[40px] sm:w-[40p] flex justify-center items-center">
                     <input
                       type="checkbox"
                       className="h-5 w-5 border-gray-300 rounded-lg custom-checkbox"
@@ -279,7 +279,7 @@ export default function TodosPage() {
                       onChange={() => handleCheckTodo(todo)}
                     />
                   </div>
-                  <button className="p-2 text-center flex-1 flex justify-center items-center">
+                  <button className="p-2 text-center w-[52px] flex justify-center items-center">
                     <FaTrash
                       size={20}
                       className=" text-red-500 cursor-pointer"
@@ -287,7 +287,7 @@ export default function TodosPage() {
                     />
                   </button>
                   <div
-                    className="p-2 text-center flex-1 flex justify-center items-center"
+                    className="p-2 text-center w-[52px] flex justify-center items-center"
                     title={todo.status}
                   >
                     {todo.status === "pending"

@@ -16,7 +16,20 @@ export default function ProfilePage() {
       ) : (
         <div className="flex justify-between p-4 shadow-md rounded-sm max-w-lg border-2 border-solid box-border">
           <div className="flex gap-1 flex-col leading-8">
+            <div className=" flex justify-between">
             <h2 className="underline">User Details</h2>
+            <div className="h-10 overflow-hidden">
+            {user?.photoURL && (
+              <Image
+              src={user.photoURL}
+              width={40}
+              height={40}
+              className="rounded-sm"
+              alt="User profile picture"
+              />
+            )}
+            </div>
+          </div>
             <p>UserName: {user?.username}</p>
             <p>DisplayName: {user?.displayName}</p>
             <p>Email: {user?.email}</p>
@@ -49,17 +62,6 @@ export default function ProfilePage() {
               </Link>
             )}
             </div>
-          </div>
-          <div>
-            {user?.photoURL && (
-              <Image
-                src={user.photoURL}
-                width={40}
-                height={40}
-                className="rounded-sm"
-                alt="User profile picture"
-              />
-            )}
           </div>
         </div>
       )}

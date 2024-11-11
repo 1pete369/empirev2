@@ -4,7 +4,7 @@ import { FirebaseError } from "firebase/app"
 import { auth } from "../firebase/firebase"
 import { GoogleAuthProvider, signInWithPopup, User as FirebaseUser, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth"
 import React, { createContext, useContext, useEffect, useState } from "react"
-import { checkUserNameExist, createUser, fetchUser, updateUserProfile } from "../dbfunctions/users"
+import { checkUser, checkUserNameExist, createUser, fetchUser, updateUserProfile } from "../dbfunctions/users"
 import createOrUpdateDayObject from "../dbfunctions/days"
 
 export type Day={
@@ -283,10 +283,16 @@ const handleEmailLogin=async(email : string, password : string)=>{
         if(firebaseUser && user===null){
           if(firebaseUser.providerData[0].providerId === "google.com"){
             const MainUserObject = await mapFirebaseUserToMainUserObjectForGoogle(firebaseUser)
-            setUser(MainUserObject)
-            await createUser(MainUserObject)
+            const isAlreadyExists = await checkUser(MainUserObject)
+            if(isAlreadyExists){
+              const MainUserObjectExisted = await fetchUser(firebaseUser.uid);
+              setUser(MainUserObjectExisted)
+            }else{
+              setUser(MainUserObject)
+              await createUser(MainUserObject)
+            }
           }
-          if(!user){
+          if(firebaseUser.providerData[0].providerId !== "google.com"){
             // const MainUser = await updateLastLoginAt(firebaseUser.uid)
             const MainUserObject = await fetchUser(firebaseUser.uid);
             setUser(MainUserObject);

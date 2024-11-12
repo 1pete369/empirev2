@@ -6,7 +6,7 @@ import { GoogleAuthProvider, signInWithPopup, User as FirebaseUser, signOut, onA
 import React, { createContext, useContext, useEffect, useState } from "react"
 import { checkUser, checkUserNameExist, createUser, fetchUser, updateUserProfile } from "../dbfunctions/users"
 import createOrUpdateDayObject from "../dbfunctions/days"
-import { formatDate } from "../dbfunctions/basics"
+import { formatDate, getTimeZoneAndCountryCode } from "../dbfunctions/basics"
 
 export type Day={
   uid: string
@@ -27,6 +27,8 @@ export type MainUserObject = {
   isEmailVerified: boolean
   createdAt: string
   lastLoginAt: string
+  timezone : string
+  countryCode : string
   customData?: {
     preferences?: any
     streak?: number
@@ -68,6 +70,8 @@ const mapFirebaseUserToMainUserObjectForGoogle = async (
 
   const placeHoldForUserName = `_${crypto.randomUUID().slice(1,10)}`
 
+  const data = getTimeZoneAndCountryCode()
+
   const MainUserObject: MainUserObject = {
     uid: firebaseUser.uid,
     email: firebaseUser.email || "",
@@ -78,6 +82,8 @@ const mapFirebaseUserToMainUserObjectForGoogle = async (
     isEmailVerified: firebaseUser.emailVerified,
     createdAt: firebaseUser.metadata.creationTime ? formatDate(new Date(firebaseUser.metadata.creationTime)) : formatDate(new Date()),
     lastLoginAt: firebaseUser.metadata.lastSignInTime ? formatDate(new Date(firebaseUser.metadata.lastSignInTime)) : formatDate(new Date()),
+    timezone : data.timezone,
+    countryCode : data.countryCode,
     customData: {
       streak: 0,
     },
@@ -95,6 +101,8 @@ const mapFirebaseUserToMainUserObjectForEmail = async (
   name: string
 ): Promise<MainUserObject> => {
 
+  const data = getTimeZoneAndCountryCode()
+
   const MainUserObject: MainUserObject = {
     uid: firebaseUser.uid,
     email: firebaseUser.email || "",
@@ -105,6 +113,8 @@ const mapFirebaseUserToMainUserObjectForEmail = async (
     isEmailVerified: firebaseUser.emailVerified,
     createdAt: firebaseUser.metadata.creationTime ? formatDate(new Date(firebaseUser.metadata.creationTime)) : formatDate(new Date()),
     lastLoginAt: firebaseUser.metadata.lastSignInTime ? formatDate(new Date(firebaseUser.metadata.lastSignInTime)) : formatDate(new Date()),
+    timezone : data.timezone,
+    countryCode : data.countryCode,
     customData: {
       streak: 0,
     },

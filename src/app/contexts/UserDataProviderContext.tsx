@@ -76,8 +76,8 @@ const mapFirebaseUserToMainUserObjectForGoogle = async (
     photoURL: firebaseUser.photoURL || "https://picsum.photos/200",
     provider : "google",  // Explicitly typed to match MainUserObject
     isEmailVerified: firebaseUser.emailVerified,
-    createdAt: firebaseUser.metadata.creationTime ? formatDate(new Date(firebaseUser.metadata.creationTime).toISOString()) : formatDate(new Date().toISOString()),
-    lastLoginAt: firebaseUser.metadata.lastSignInTime ? formatDate(new Date(firebaseUser.metadata.lastSignInTime).toISOString()) : formatDate(new Date().toISOString()),
+    createdAt: firebaseUser.metadata.creationTime ? formatDate(new Date(firebaseUser.metadata.creationTime)) : formatDate(new Date()),
+    lastLoginAt: firebaseUser.metadata.lastSignInTime ? formatDate(new Date(firebaseUser.metadata.lastSignInTime)) : formatDate(new Date()),
     customData: {
       streak: 0,
     },
@@ -103,8 +103,8 @@ const mapFirebaseUserToMainUserObjectForEmail = async (
     photoURL: firebaseUser.photoURL || "https://picsum.photos/200",
     provider : "email",  // Explicitly typed to match MainUserObject
     isEmailVerified: firebaseUser.emailVerified,
-    createdAt: firebaseUser.metadata.creationTime ? formatDate(new Date(firebaseUser.metadata.creationTime).toISOString()) : formatDate(new Date().toISOString()),
-    lastLoginAt: firebaseUser.metadata.lastSignInTime ? formatDate(new Date(firebaseUser.metadata.lastSignInTime).toISOString()) : formatDate(new Date().toISOString()),
+    createdAt: firebaseUser.metadata.creationTime ? formatDate(new Date(firebaseUser.metadata.creationTime)) : formatDate(new Date()),
+    lastLoginAt: firebaseUser.metadata.lastSignInTime ? formatDate(new Date(firebaseUser.metadata.lastSignInTime)) : formatDate(new Date()),
     customData: {
       streak: 0,
     },

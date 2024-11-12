@@ -194,6 +194,7 @@ export default function TodosPage() {
       if (user) {
         const date = new Date().toISOString()
         const dayDate = new Date(date).toLocaleDateString()
+        console.log("Day date", dayDate)
 
         setIsLoading(true) // Set loading to true before starting the fetch
         console.log("Loading todos...")

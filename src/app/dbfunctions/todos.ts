@@ -24,6 +24,7 @@ export async function postTodo(todo: Todo, user: MainUserObject) {
       if(response.flag){
           const date = new Date().toISOString()
           const dayDate = new Date(date).toLocaleDateString()
+          console.log("Daydate at push todo",dayDate)
           console.log("New todo ObjectId", response.newTodoObject._id)
           const todoId = response.newTodoObject._id
           const response2 = await axios.post(

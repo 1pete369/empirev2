@@ -4,7 +4,7 @@ export function formatDate(dateInput : string) {
     console.log("dateInput", dateInput)
     // Format the date in "MM/DD/YYYY" format (customize as needed)
     const dateCreated = new Intl.DateTimeFormat('en-US', {
-        month: '2-digit',
+        month: 'short',
         day: '2-digit',
         year: 'numeric'
     }).format(date);

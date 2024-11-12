@@ -1,6 +1,7 @@
 "use client"
 
 import { useUserContext } from "@/app/contexts/UserDataProviderContext"
+import { formatDate } from "@/app/dbfunctions/basics"
 import {
   deleteTodo,
   getTodos,
@@ -56,11 +57,11 @@ export type FetchedTodo = {
 // console.log("Local Time to display:", localTime);
 
 const createTodo = (name: string, uid: string): Todo => {
-  const date = new Date().toISOString()
+  const todoDate = formatDate(new Date().toISOString())
   const todo: Todo = {
     id: crypto.randomUUID(),
     uid: uid,
-    date: new Date(date).toLocaleDateString(),
+    date:  todoDate,
     name: name,
     completed: false,
     createdAt: new Date().toISOString(),
@@ -192,9 +193,13 @@ export default function TodosPage() {
   useEffect(() => {
     async function fetchTodos() {
       if (user) {
-        const date = new Date().toISOString()
-        const dayDate = new Date(date).toLocaleDateString()
+        
+        // Usage example
+        const dayDate = formatDate(new Date().toISOString());
+        // const lastLoginAt = formatDate(new Date());
         console.log("Day date", dayDate)
+        // console.log("LastLoginAt:", lastLoginAt);
+
 
         setIsLoading(true) // Set loading to true before starting the fetch
         console.log("Loading todos...")

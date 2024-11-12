@@ -6,6 +6,7 @@ import { GoogleAuthProvider, signInWithPopup, User as FirebaseUser, signOut, onA
 import React, { createContext, useContext, useEffect, useState } from "react"
 import { checkUser, checkUserNameExist, createUser, fetchUser, updateUserProfile } from "../dbfunctions/users"
 import createOrUpdateDayObject from "../dbfunctions/days"
+import { formatDate } from "../dbfunctions/basics"
 
 export type Day={
   uid: string
@@ -24,8 +25,8 @@ export type MainUserObject = {
   photoURL?: string
   provider: "google" | "email"
   isEmailVerified: boolean
-  createdAt: Date
-  lastLoginAt: Date
+  createdAt: string
+  lastLoginAt: string
   customData?: {
     preferences?: any
     streak?: number
@@ -75,8 +76,8 @@ const mapFirebaseUserToMainUserObjectForGoogle = async (
     photoURL: firebaseUser.photoURL || "https://picsum.photos/200",
     provider : "google",  // Explicitly typed to match MainUserObject
     isEmailVerified: firebaseUser.emailVerified,
-    createdAt: new Date(firebaseUser.metadata.creationTime || ""),
-    lastLoginAt: new Date(firebaseUser.metadata.lastSignInTime || ""),
+    createdAt: firebaseUser.metadata.creationTime ? formatDate(new Date(firebaseUser.metadata.creationTime).toISOString()) : formatDate(new Date().toISOString()),
+    lastLoginAt: firebaseUser.metadata.lastSignInTime ? formatDate(new Date(firebaseUser.metadata.lastSignInTime).toISOString()) : formatDate(new Date().toISOString()),
     customData: {
       streak: 0,
     },
@@ -102,8 +103,8 @@ const mapFirebaseUserToMainUserObjectForEmail = async (
     photoURL: firebaseUser.photoURL || "https://picsum.photos/200",
     provider : "email",  // Explicitly typed to match MainUserObject
     isEmailVerified: firebaseUser.emailVerified,
-    createdAt: new Date(firebaseUser.metadata.creationTime || ""),
-    lastLoginAt: new Date(firebaseUser.metadata.lastSignInTime || ""),
+    createdAt: firebaseUser.metadata.creationTime ? formatDate(new Date(firebaseUser.metadata.creationTime).toISOString()) : formatDate(new Date().toISOString()),
+    lastLoginAt: firebaseUser.metadata.lastSignInTime ? formatDate(new Date(firebaseUser.metadata.lastSignInTime).toISOString()) : formatDate(new Date().toISOString()),
     customData: {
       streak: 0,
     },

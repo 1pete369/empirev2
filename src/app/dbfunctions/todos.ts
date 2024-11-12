@@ -2,14 +2,15 @@ import axios from "axios"
 import { Todo } from "../_features/todos/page"
 import { MainUserObject } from "../contexts/UserDataProviderContext"
 import  { checkDayExists } from "./days"
+import { formatDate } from "./basics"
 
 export async function postTodo(todo: Todo, user: MainUserObject) {
   console.log("Came to post Todo")
 
-  const date = new Date().toISOString()
+  const date = formatDate(new Date().toISOString())
 
   try {
-    const isDayExists = await checkDayExists(new Date(date).toLocaleDateString(), user.uid)
+    const isDayExists = await checkDayExists(date, user.uid)
     console.log("IsDayExist at postTodo" , isDayExists)
     if (isDayExists) {
       const response = (
@@ -22,8 +23,8 @@ export async function postTodo(todo: Todo, user: MainUserObject) {
       console.log("Response After todo added", response)
 
       if(response.flag){
-          const date = new Date().toISOString()
-          const dayDate = new Date(date).toLocaleDateString()
+          const dayDate = formatDate(new Date().toISOString())
+
           console.log("Daydate at push todo",dayDate)
           console.log("New todo ObjectId", response.newTodoObject._id)
           const todoId = response.newTodoObject._id

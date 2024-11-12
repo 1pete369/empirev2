@@ -177,7 +177,9 @@ export default function TodosPage() {
   const handleDeleteTodo = async (todo: Todo) => {
     dispatch({ type: "DeleteTodo", id: todo.id })
     try {
-      await deleteTodo(todo)
+      if(user){
+        await deleteTodo(todo,user)
+      }
     } catch (err) {
       console.log(err)
     }

@@ -29,7 +29,7 @@ export async function postTodo(todo: Todo, user: MainUserObject) {
           console.log("New todo ObjectId", response.newTodoObject._id)
           const todoId = response.newTodoObject._id
           const response2 = await axios.post(
-              `${process.env.NEXT_PUBLIC_API_URL}/days/push-day-id/${user.uid}`,
+              `${process.env.NEXT_PUBLIC_API_URL}/days/push-todo-id/${user.uid}`,
               { todoId ,dayDate}
             )
             console.log("Todo id added to day", response2)
@@ -61,7 +61,7 @@ export async function patchTodo(todo: Todo) {
   }
 }
 
-export async function deleteTodo(todo: Todo) {
+export async function deleteTodo(todo: Todo, user: MainUserObject) {
   const id = todo.id
   try {
     const response = (
@@ -70,6 +70,17 @@ export async function deleteTodo(todo: Todo) {
       )
     ).data
     console.log(response)
+
+    const deleteTodoObjectId = response.response._id
+    console.log(deleteTodoObjectId)
+
+    const dayDate = formatDate(new Date().toISOString())
+
+
+    const response2 =(await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/days/pull-todo-id/${user.uid}`,{deleteTodoObjectId , dayDate })).data
+    console.log("Todo id removed from day", response2)
+
+
   } catch (err : unknown) {
     if(err instanceof Error){
         console.log(err.message)

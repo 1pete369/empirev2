@@ -1,5 +1,6 @@
 import axios from "axios"
 import { Day, MainUserObject } from "../contexts/UserDataProviderContext"
+import { formatDate } from "./basics"
 
 export async function checkDayExists(date: string, uid: string) {
 
@@ -20,14 +21,14 @@ export async function checkDayExists(date: string, uid: string) {
 
 export default async function createOrUpdateDayObject(user: MainUserObject) {
 
-  const date = new Date().toISOString()
+  const date = formatDate(new Date().toISOString())
 
-  const dateForChecking = new Date(date).toLocaleDateString()
+  const dateForChecking = date
 
   const dayObject: Day = {
     uid: user.uid,
-    date: new Date(date).toLocaleDateString(),
-    dateId: `${new Date(date).toLocaleDateString()}_${crypto
+    date: date,
+    dateId: `${date}_${crypto
       .randomUUID()
       .slice(0, 10)}`,
     todos: [],

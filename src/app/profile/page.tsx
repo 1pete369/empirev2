@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useUserContext } from "../contexts/UserDataProviderContext";
+import { formatDate } from "../dbfunctions/basics";
 
 export default function ProfilePage() {
   const { user, handleLogout , profileIsLoading} = useUserContext();
@@ -35,7 +36,7 @@ export default function ProfilePage() {
             <p className="flex gap-2"><span className=" font-semibold underline">Email:</span><span className=" text-slate-600 ">{user?.email}</span></p>
             {/* <p className="flex gap-2"><span className=" font-semibold underline">Uid:</span><span className=" text-slate-600 ">{user?.uid}</span></p> */}
             <p className="flex gap-2"><span className=" font-semibold underline">Provider:</span><span className=" text-slate-600 ">{user?.provider}</span></p>
-            <p className="flex gap-2"><span className=" font-semibold underline">CreatedAt:</span><span className=" text-slate-600 ">{new Date(user?.createdAt).toLocaleDateString()}</span></p>
+            <p className="flex gap-2"><span className=" font-semibold underline">CreatedAt:</span><span className=" text-slate-600 ">{formatDate(user.createdAt)}</span></p>
             <p className="flex gap-2"><span className=" font-semibold underline">LastLoginAt:</span><span className=" text-slate-600 ">{new Date(user?.lastLoginAt).toLocaleDateString()}</span></p>
             <div className="flex gap-2 flex-wrap">
             <button

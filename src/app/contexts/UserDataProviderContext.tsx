@@ -108,7 +108,7 @@ const mapFirebaseUserToMainUserObjectForEmail = async (
     email: firebaseUser.email || "",
     displayName: name,
     username: userName,
-    photoURL: firebaseUser.photoURL || "https://picsum.photos/200",
+    photoURL: firebaseUser.photoURL || `https://picsum.photos/seed/${firebaseUser.uid}/200`,
     provider : "email",  // Explicitly typed to match MainUserObject
     isEmailVerified: firebaseUser.emailVerified,
     createdAt: firebaseUser.metadata.creationTime ? formatDate(new Date(firebaseUser.metadata.creationTime)) : formatDate(new Date()),

@@ -65,6 +65,10 @@ export default function Page() {
                   </div>
                 </div>
                 <p className="flex gap-2">
+                  <span className=" font-semibold underline">Uid:</span>
+                  <span className=" text-slate-600 ">{user?.uid}</span>
+                </p>
+                <p className="flex gap-2">
                   <span className=" font-semibold underline">UserName:</span>
                   <span className=" text-slate-600 ">{user?.username}</span>
                 </p>
@@ -80,6 +84,11 @@ export default function Page() {
                 <p className="flex gap-2">
                   <span className=" font-semibold underline">Provider:</span>
                   <span className=" text-slate-600 ">{user?.provider}</span>
+                </p>
+                
+                <p className="flex gap-2">
+                  <span className=" font-semibold underline">isEmailVerified:</span>
+                  <span className=" text-slate-600 ">{user?.isEmailVerified ? "Yes" : "No"} </span>
                 </p>
                 <p className="flex gap-2">
                   <span className=" font-semibold underline">CreatedAt:</span>

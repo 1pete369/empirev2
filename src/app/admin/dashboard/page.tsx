@@ -41,14 +41,14 @@ export default function Page() {
       <p className=" text-xl ">Admin DashBoard</p>
       <Link href={"/profile"} className=" border-2 rounded-sm flex items-center font-semibold"><BiArrowBack size={25}/></Link>
       </div>
-    <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-4 gap-4">
+    <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 p-4 gap-4">
       {
         isLoading && <p className="text-xl">Loading...</p>
       }
       {allUsers.length > 0 &&
         allUsers?.map((user: MainUserObject, i: number) => {
           return (
-            <div className="flex flex-col gap-10 justify-between p-4 shadow-md rounded-sm max-w-lg border-2 border-solid box-border" key={user.uid}>
+            <div className="flex flex-col gap-10 justify-between p-4 shadow-md rounded-sm max-w-sm border-2 border-solid box-border" key={user.uid}>
               <div className="flex gap-1 flex-col leading-8">
                 <div className=" flex justify-between mr-6">
                   <h2 className="underline">User Details</h2>

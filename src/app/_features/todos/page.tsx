@@ -192,11 +192,13 @@ export default function TodosPage() {
   useEffect(() => {
     async function fetchTodos() {
       if (user) {
+        const date = new Date().toISOString()
+        const dayDate = new Date(date).toLocaleDateString()
+
         setIsLoading(true) // Set loading to true before starting the fetch
         console.log("Loading todos...")
-
         try {
-          const todos = await getTodos(user)
+          const todos = await getTodos(user,dayDate)
           console.log("Fetched todos:", todos)
 
           if (Array.isArray(todos)) {

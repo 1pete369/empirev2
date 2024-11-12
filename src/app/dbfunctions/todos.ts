@@ -22,12 +22,13 @@ export async function postTodo(todo: Todo, user: MainUserObject) {
       console.log("Response After todo added", response)
 
       if(response.flag){
-
+          const date = new Date().toISOString()
+          const dayDate = new Date(date).toLocaleDateString()
           console.log("New todo ObjectId", response.newTodoObject._id)
           const todoId = response.newTodoObject._id
           const response2 = await axios.post(
               `${process.env.NEXT_PUBLIC_API_URL}/days/push-day-id/${user.uid}`,
-              { todoId }
+              { todoId ,dayDate}
             )
             console.log("Todo id added to day", response2)
         }
@@ -74,12 +75,12 @@ export async function deleteTodo(todo: Todo) {
   }
 }
 
-export async function getTodos(user : MainUserObject) {
+export async function getTodos(user : MainUserObject, dayDate : string) {
 
   console.log("Get todos called")
   try {
     const response = (
-      await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/todos/get-todos/${user.uid}`)
+      await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/todos/get-todos/${user.uid}`,{ params : {dayDate} })
     ).data
     return response.todos
   } catch (err : unknown) {

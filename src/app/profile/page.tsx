@@ -1,12 +1,11 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { useUserContext } from "../contexts/UserDataProviderContext"
 import { formatDate } from "../dbfunctions/basics"
 import ReactCountryFlag from "react-country-flag"
-import * as ctz from "countries-and-timezones";
 
 export default function ProfilePage() {
   const { user, handleLogout, profileIsLoading } = useUserContext()

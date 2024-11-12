@@ -37,7 +37,7 @@ export default function ProfilePage() {
             {/* <p className="flex gap-2"><span className=" font-semibold underline">Uid:</span><span className=" text-slate-600 ">{user?.uid}</span></p> */}
             <p className="flex gap-2"><span className=" font-semibold underline">Provider:</span><span className=" text-slate-600 ">{user?.provider}</span></p>
             <p className="flex gap-2"><span className=" font-semibold underline">CreatedAt:</span><span className=" text-slate-600 ">{formatDate(user.createdAt)}</span></p>
-            <p className="flex gap-2"><span className=" font-semibold underline">LastLoginAt:</span><span className=" text-slate-600 ">{new Date(user?.lastLoginAt).toLocaleDateString()}</span></p>
+            <p className="flex gap-2"><span className=" font-semibold underline">LastLoginAt:</span><span className=" text-slate-600 ">{formatDate(user.lastLoginAt)}</span></p>
             <div className="flex gap-2 flex-wrap">
             <button
               className="bg-slate-800 p-2.5 min-w-[200px] max-w-[200px] rounded text-white text-lg text-center shadow-md"

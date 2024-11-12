@@ -1,11 +1,11 @@
 "use client"
 
 import { useAdminAnalyticsContext } from "@/app/contexts/AdminAnalytics"
-import { MainUserObject } from "@/app/contexts/UserDataProviderContext"
+import { MainUserObject, useUserContext } from "@/app/contexts/UserDataProviderContext"
 import { formatDate } from "@/app/dbfunctions/basics"
-import axios from "axios"
 import Image from "next/image"
 import Link from "next/link"
+import { redirect } from "next/navigation"
 import React, { useEffect, useState } from "react"
 import ReactCountryFlag from "react-country-flag"
 import { BiArrowBack } from "react-icons/bi"
@@ -14,15 +14,26 @@ export default function Page() {
   const [users, setUsers] = useState<MainUserObject[] | []>([])
   const [isLoading, setIsLoading] = useState(false)
   const { allUsers, handleGetAllUsers }= useAdminAnalyticsContext()
+  const { user }= useUserContext()
+  const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL
 
   useEffect(() => {
-    const fetchUsers= async()=>{
-      setIsLoading(true)
-      await handleGetAllUsers()
-      setIsLoading(false)
+    if(user===null) return
+    if(user.email!==adminEmail){
+      redirect('/')
+    }else{
+      const fetchUsers= async()=>{
+        setIsLoading(true)
+        await handleGetAllUsers()
+        setIsLoading(false)
+      }
+      fetchUsers()
     }
-    fetchUsers()
-  }, [])
+  }, [user])
+
+  if(user===null || (user && user.email!==adminEmail)){
+    return <p>Loading...</p> 
+  }
 
   return (
     <div className="">

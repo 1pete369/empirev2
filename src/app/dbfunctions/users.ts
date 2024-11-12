@@ -53,8 +53,8 @@ export async function fetchUser(uid: string) {
     ).data.userObject
 
     // Convert createdAt and lastLoginAt to Date objects if they exist
-    if (user.createdAt) user.createdAt = new Date(user.createdAt)
-    if (user.lastLoginAt) user.lastLoginAt = new Date(user.lastLoginAt)
+    // if (user.createdAt) user.createdAt = new Date(user.createdAt)
+    // if (user.lastLoginAt) user.lastLoginAt = new Date(user.lastLoginAt)
 
     console.log("Fetched user", user)
     return user

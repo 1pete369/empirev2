@@ -1,5 +1,6 @@
 "use client"
 
+import { useAdminAnalyticsContext } from "@/app/contexts/AdminAnalytics"
 import { MainUserObject } from "@/app/contexts/UserDataProviderContext"
 import { formatDate } from "@/app/dbfunctions/basics"
 import axios from "axios"
@@ -11,14 +12,16 @@ import { BiArrowBack } from "react-icons/bi"
 
 export default function Page() {
   const [users, setUsers] = useState<MainUserObject[] | []>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const { allUsers, handleGetAllUsers }= useAdminAnalyticsContext()
 
   useEffect(() => {
-    async function getUsers() {
-      const result = (await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/get-all-users`)).data
-      console.log(result.allUsers)
-      setUsers(result.allUsers)
+    const fetchUsers= async()=>{
+      setIsLoading(true)
+      await handleGetAllUsers()
+      setIsLoading(false)
     }
-    getUsers()
+    fetchUsers()
   }, [])
 
   return (
@@ -28,8 +31,11 @@ export default function Page() {
       <Link href={"/profile"} className=" border-2 rounded-sm flex items-center font-semibold"><BiArrowBack size={25}/></Link>
       </div>
     <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-4 gap-4">
-      {users.length > 0 &&
-        users?.map((user: MainUserObject, i: number) => {
+      {
+        isLoading && <p className="text-xl">Loading...</p>
+      }
+      {allUsers.length > 0 &&
+        allUsers?.map((user: MainUserObject, i: number) => {
           return (
             <div className="flex flex-col gap-10 justify-between p-4 shadow-md rounded-sm max-w-lg border-2 border-solid box-border" key={user.uid}>
               <div className="flex gap-1 flex-col leading-8">

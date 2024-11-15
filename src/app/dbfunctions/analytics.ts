@@ -1,12 +1,8 @@
 import axios from "axios"
-import { formatDate } from "./basics"
-import { MainUserObject } from "../contexts/UserDataProviderContext"
+import { FetchedMainUserObject } from "../contexts/UserDataProviderContext"
+import { eachDayOfInterval, format, isSameDay, parse, subDays } from "date-fns"
 
-export function getDailyActivUsers() {
-  const todayDate = formatDate(new Date().toISOString())
-}
-
-export async function getAllUsers():Promise<MainUserObject[]> {
+export async function getAllUsers(): Promise<FetchedMainUserObject[]> {
   try {
     const result = (
       await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/get-all-users`)
@@ -19,4 +15,25 @@ export async function getAllUsers():Promise<MainUserObject[]> {
     }
   }
   return []
+}
+
+export async function getActiveUsersDataByDate(users: FetchedMainUserObject[] , startDate : string ) {
+
+  const dates = eachDayOfInterval({
+    start: startDate ? startDate : subDays(new Date(),7),
+    end: new Date()
+  })
+
+  const activeUserData = dates.map((date) => {
+    const activeUserCount = users.reduce((count, user) => {
+      const userWasActive = user.customData.days.some((day) => {
+        const entryDate = parse(day.date, "MMM dd, yyyy", new Date())
+        return isSameDay(entryDate, date)
+      })
+      return userWasActive ? count + 1 : count
+    }, 0)
+    return { date: format(date, "MMM dd , yyyy"), activeUserCount }
+  })
+
+  return activeUserData
 }

@@ -1,30 +1,29 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import Navbar from "./components/Navbar";
-import { UserProvider } from "./contexts/UserDataProviderContext";
-import { AdminAnalyticsProvider } from "./contexts/AdminAnalytics";
-
+import type { Metadata } from "next"
+import "./globals.css"
+import Navbar from "./components/Navbar"
+import { UserProvider } from "./contexts/UserDataProviderContext"
+import { AdminAnalyticsProvider } from "./contexts/AdminAnalyticsProvider"
 
 export const metadata: Metadata = {
   title: "Your productivity hub",
-  description: "Productivity App",
-};
+  description: "Productivity App"
+}
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en">
       <body>
         <UserProvider>
           <AdminAnalyticsProvider>
-        <Navbar />
-        {children}
+            <Navbar />
+            {children}
           </AdminAnalyticsProvider>
         </UserProvider>
       </body>
     </html>
-  );
+  )
 }

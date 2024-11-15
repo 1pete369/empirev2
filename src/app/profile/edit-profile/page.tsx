@@ -19,7 +19,7 @@ export default function EditProfilePage() {
         setSuccess('')
         setIsLoading(true)
         if(user!==null){
-             await handleProfileUpdate(user.uid,user.email, username, displayName)
+             await handleProfileUpdate(user.uid,user.personalInfo?.email, username, displayName)
         }
         setSuccess("Update successful!")
         setIsLoading(false)
@@ -54,7 +54,7 @@ export default function EditProfilePage() {
           type="text"
           id="username"
           className={`rounded-sm border-2 border-solid border-black/30 focus-within:border-black outline-none px-2 py-1.5 placeholder:text-stone-500 text-black min-w-60 lowercase ${username!=="" && "bg-sky-100"}`}
-          placeholder={user.username}
+          placeholder={user.personalInfo?.username!}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
@@ -68,7 +68,7 @@ export default function EditProfilePage() {
           type="displayName"
           id="displayName"
           className={`rounded-sm border-2 border-solid border-black/30 focus-within:border-black outline-none px-2 py-1.5 placeholder:text-stone-500 text-black min-w-60 ${displayName!=="" && "bg-sky-100"}`}
-          placeholder={user.displayName as string}
+          placeholder={user.personalInfo?.displayName as string}
           value={displayName}
           onChange={(e) => setDisplayName(e.target.value)}
         />
@@ -82,9 +82,9 @@ export default function EditProfilePage() {
           required
           type="email"
           id="email"
-          className={`rounded-sm border-2 border-solid border-black/30 focus-within:border-black outline-none px-2 py-1.5 placeholder:text-stone-500 text-black min-w-60 ${user.email!=="" && "bg-sky-100"}`}
+          className={`rounded-sm border-2 border-solid border-black/30 focus-within:border-black outline-none px-2 py-1.5 placeholder:text-stone-500 text-black min-w-60 ${user.personalInfo.email!=="" && "bg-sky-100"}`}
           placeholder="Enter email"
-          value={user?.email}
+          value={user.personalInfo?.email}
           disabled
           />
       </div>

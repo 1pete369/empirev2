@@ -25,9 +25,9 @@ export default function ProfilePage() {
             <div className=" flex justify-between mr-6">
               <h2 className="underline">User Details</h2>
               <div className="h-10 overflow-hidden">
-                {user?.photoURL && (
+                {user.personalInfo?.photoURL && (
                   <Image
-                    src={user.photoURL}
+                    src={user.personalInfo.photoURL}
                     width={40}
                     height={40}
                     className="rounded-sm"
@@ -38,43 +38,51 @@ export default function ProfilePage() {
             </div>
             <p className="flex gap-2">
               <span className=" font-semibold underline">UserName:</span>
-              <span className=" text-slate-600 ">{user?.username}</span>
+              <span className=" text-slate-600 ">
+                {user.personalInfo?.username}
+              </span>
             </p>
             <p className="flex gap-2">
               <span className=" font-semibold underline">DisplayName:</span>
-              <span className=" text-slate-600 ">{user?.displayName}</span>
+              <span className=" text-slate-600 ">
+                {user.personalInfo?.displayName}
+              </span>
             </p>
             <p className="flex gap-2">
               <span className=" font-semibold underline">Email:</span>
-              <span className=" text-slate-600 ">{user?.email}</span>
+              <span className=" text-slate-600 ">
+                {user.personalInfo?.email}
+              </span>
             </p>
-            {/* <p className="flex gap-2"><span className=" font-semibold underline">Uid:</span><span className=" text-slate-600 ">{user?.uid}</span></p> */}
+            {/* <p className="flex gap-2"><span className=" font-semibold underline">Uid:</span><span className=" text-slate-600 ">{user.personalInfo?.uid}</span></p> */}
             <p className="flex gap-2">
               <span className=" font-semibold underline">Provider:</span>
-              <span className=" text-slate-600 ">{user?.provider}</span>
+              <span className=" text-slate-600 ">
+                {user.personalInfo?.provider}
+              </span>
             </p>
             <p className="flex gap-2">
               <span className=" font-semibold underline">CreatedAt:</span>
               <span className=" text-slate-600 ">
-                {formatDate(user.createdAt)}
+                {formatDate(user.timings.createdAt)}
               </span>
             </p>
             <p className="flex gap-2">
               <span className=" font-semibold underline">LastLoginAt:</span>
               <span className=" text-slate-600 ">
-                {formatDate(user.lastLoginAt)}
+                {formatDate(user.timings.lastLoginAt)}
               </span>
             </p>
             <p className="flex gap-2">
               <span className=" font-semibold underline">TimeZone:</span>
               <span className=" text-slate-600 ">
-                {user.timezone}
+                {user.customData.timezone.timezoneName}
               </span>
             </p>
             <p className="flex gap-2 items-center">
               <span className=" font-semibold underline">Country:</span>
               <ReactCountryFlag
-                countryCode={user.countryCode}
+                countryCode={user.customData.timezone.countryCode}
                 svg
                 style={{ width: "20px", height: "20px" }}
                 title="United States"
@@ -92,7 +100,8 @@ export default function ProfilePage() {
                   Edit
                 </button>
               </Link>
-              {user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL && (
+              {user.personalInfo?.email ===
+                process.env.NEXT_PUBLIC_ADMIN_EMAIL && (
                 <Link href={"/admin/dashboard"}>
                   <button className="bg-teal-500 p-2.5 min-w-[200px] max-w-[200px] rounded text-white text-lg text-center shadow-md">
                     Dashboard

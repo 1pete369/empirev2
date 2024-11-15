@@ -1,22 +1,19 @@
 import * as ctz from "countries-and-timezones"
+import { format } from "date-fns"
 
 export function formatDate(dateInput: string | Date): string {
-  // Ensure dateInput is a Date object
+
   const date = typeof dateInput === "string" ? new Date(dateInput) : dateInput
 
-  // Log to verify the input is correct
-  console.log("dateInput", dateInput)
+  const dateCreated = format(date,"MMM dd, yyyy")
 
-  // Format the date in "MM/DD/YYYY" format
-  const dateCreated = new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "2-digit",
-    year: "numeric"
-  }).format(date)
+  return dateCreated
+}
 
-  // Log formatted date
-  console.log("DateCreated at basic date", dateCreated)
+export function formatDateOnDuration(dateInput: string | Date): string {
+  const date = typeof dateInput === "string" ? new Date(dateInput) : dateInput
 
+  const dateCreated = format(date, "MMM dd")
   return dateCreated
 }
 

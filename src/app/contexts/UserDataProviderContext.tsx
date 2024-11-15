@@ -7,33 +7,97 @@ import React, { createContext, useContext, useEffect, useState } from "react"
 import { checkUser, checkUserNameExist, createUser, fetchUser, updateUserProfile } from "../dbfunctions/users"
 import createOrUpdateDayObject from "../dbfunctions/days"
 import { formatDate, getTimeZoneAndCountryCode } from "../dbfunctions/basics"
+import { Todo } from "../_features/todos/page"
 
 export type Day={
   uid: string
   dateId : string 
   date : string
-  todos ?: string[]
+  todos : Todo[]
   dayCompleted : boolean
 }
 
 // Main userObject TYPE
+// export type MainUserObject = {
+//   uid: string
+//   email: string
+//   displayName?: string | null
+//   username?: string
+//   photoURL: string
+//   provider: "google" | "email"
+//   isEmailVerified: boolean
+//   createdAt: string
+//   lastLoginAt: string
+//   timezone : string
+//   countryCode : string
+//   customData: {
+//     // preferences?: any
+//     streak: number
+//     goals: string[]
+//     days : Day[]
+//   }
+// }
+
+export type FetchedMainUserObject = {
+  uid: string,
+  personalInfo : {
+    email : string,
+    displayName : string,
+    username : string,
+    photoURL : string,
+    provider : string,
+    isEmailVerified : boolean
+  },
+  customData : {
+    timezone : {
+      timezoneName: string,
+      countryCode : string
+    },
+    preferences : {
+      notification : boolean
+    },
+    streak : number,
+    goals : string[],
+    days : Todo[]
+  },
+  updates : {
+    profileUpdatedAt : Date
+  },
+  timings : {
+    createdAt : string,
+    lastLoginAt : string
+  }
+}
+
+
 export type MainUserObject = {
-  uid: string
-  email: string
-  displayName?: string | null
-  username?: string
-  photoURL?: string
-  provider: "google" | "email"
-  isEmailVerified: boolean
-  createdAt: string
-  lastLoginAt: string
-  timezone : string
-  countryCode : string
-  customData?: {
-    preferences?: any
-    streak?: number
-    goals?: string[]
-    days ?: string[]
+  uid: string,
+  personalInfo : {
+    email : string,
+    displayName : string,
+    username : string,
+    photoURL : string,
+    provider : string,
+    isEmailVerified : boolean
+  },
+  customData : {
+    timezone : {
+      timezoneName: string,
+      countryCode : string
+    },
+    preferences : {
+      notification : boolean
+    },
+    streak : number,
+    goals : string[],
+    days : string []
+  },
+  updates : {
+    profileUpdatedAt : Date
+  },
+  timings : {
+    createdAt : string,
+    lastLoginAt : string
   }
 }
 
@@ -66,31 +130,45 @@ type UserContextType = {
 
 const mapFirebaseUserToMainUserObjectForGoogle = async (
   firebaseUser: FirebaseUser,
-): Promise<MainUserObject> => {
+) => {
 
-  const placeHoldForUserName = `_${crypto.randomUUID().slice(1,10)}`
-
-  const data = getTimeZoneAndCountryCode()
-
-  const MainUserObject: MainUserObject = {
-    uid: firebaseUser.uid,
-    email: firebaseUser.email || "",
-    displayName: firebaseUser.displayName?.toLowerCase(),
-    username: firebaseUser.displayName?.replace(/\s+/g, "").toLowerCase().concat(placeHoldForUserName),
-    photoURL: firebaseUser.photoURL || "https://picsum.photos/200",
-    provider : "google",  // Explicitly typed to match MainUserObject
-    isEmailVerified: firebaseUser.emailVerified,
-    createdAt: firebaseUser.metadata.creationTime ? formatDate(new Date(firebaseUser.metadata.creationTime)) : formatDate(new Date()),
-    lastLoginAt: firebaseUser.metadata.lastSignInTime ? formatDate(new Date(firebaseUser.metadata.lastSignInTime)) : formatDate(new Date()),
-    timezone : data.timezone,
-    countryCode : data.countryCode,
-    customData: {
-      streak: 0,
+    const placeHoldForUserName = `_${crypto.randomUUID().slice(1,10)}`
+    
+    const data = getTimeZoneAndCountryCode()
+    
+    const MainUserObject: MainUserObject = {
+      uid: firebaseUser.uid,
+    personalInfo : {
+      email: firebaseUser.email || "",
+      displayName: firebaseUser.displayName?.toLowerCase()!,
+      username: firebaseUser.displayName?.replace(/\s+/g, "").toLowerCase().concat(placeHoldForUserName)!,
+      photoURL: firebaseUser.photoURL || "https://picsum.photos/200",
+      provider : "google",  // Explicitly typed to match MainUserObject
+      isEmailVerified: firebaseUser.emailVerified!,
     },
+    customData: {
+      timezone : { 
+        timezoneName :data.timezone,
+        countryCode : data.countryCode
+      },
+      preferences : {
+        notification : false
+      },
+      streak: 0,
+      goals : [],
+      days: []
+    },
+    updates : {
+      profileUpdatedAt : new Date()
+    },
+    timings : {
+      createdAt : firebaseUser.metadata.creationTime!,
+      lastLoginAt : firebaseUser.metadata.lastSignInTime!,
+    }
   };
-
+  
   console.log("Main user object",MainUserObject)
-
+  
   return MainUserObject;
 };
 
@@ -105,20 +183,34 @@ const mapFirebaseUserToMainUserObjectForEmail = async (
 
   const MainUserObject: MainUserObject = {
     uid: firebaseUser.uid,
+  personalInfo : {
     email: firebaseUser.email || "",
     displayName: name,
     username: userName,
-    photoURL: firebaseUser.photoURL || `https://picsum.photos/seed/${firebaseUser.uid}/200`,
+    photoURL: `https://picsum.photos/seed/${firebaseUser.uid}/200`,
     provider : "email",  // Explicitly typed to match MainUserObject
-    isEmailVerified: firebaseUser.emailVerified,
-    createdAt: firebaseUser.metadata.creationTime ? formatDate(new Date(firebaseUser.metadata.creationTime)) : formatDate(new Date()),
-    lastLoginAt: firebaseUser.metadata.lastSignInTime ? formatDate(new Date(firebaseUser.metadata.lastSignInTime)) : formatDate(new Date()),
-    timezone : data.timezone,
-    countryCode : data.countryCode,
-    customData: {
-      streak: 0,
+    isEmailVerified: firebaseUser.emailVerified!,
+  },
+  customData: {
+    timezone : { 
+      timezoneName :data.timezone,
+      countryCode : data.countryCode
     },
-  };
+    preferences : {
+      notification : false
+    },
+    streak: 0,
+    goals : [],
+    days: []
+  },
+  updates : {
+    profileUpdatedAt : new Date()
+  },
+  timings : {
+    createdAt : firebaseUser.metadata.creationTime!,
+    lastLoginAt : firebaseUser.metadata.lastSignInTime!,
+  }
+};
 
   console.log("Main user object",MainUserObject)
 
@@ -163,15 +255,15 @@ const isValidEmail = (email: string) => {
     let error = "";
     console.log("came to proile update")
     console.log("username passed",username)
-    console.log("user username", user?.username)
+    console.log("user username", user?.personalInfo.username)
 
     if (displayName.length < 3) {
       error = "Name must be at least 3 characters long!";
     } else if (username.length < 8) {
       error = "Username must be at least 8 characters long!";
-    } else if (username === user?.username && displayName === user?.displayName) {
+    } else if (username === user?.personalInfo.username && displayName === user?.personalInfo.displayName) {
       error = "No changes detected!";
-    } else if (await checkUserNameExist(username) && username !== user?.username) {
+    } else if (await checkUserNameExist(username) && username !== user?.personalInfo.username) {
       error = "Username already exists!";
     }
 
@@ -343,3 +435,82 @@ export const useUserContext = ()=>{
     }
     return context
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const mapFirebaseUserToMainUserObjectForGoogle = async (
+//   firebaseUser: FirebaseUser,
+// ): Promise<MainUserObject> => {
+
+//   const placeHoldForUserName = `_${crypto.randomUUID().slice(1,10)}`
+
+//   const data = getTimeZoneAndCountryCode()
+
+//   const MainUserObject: MainUserObject = {
+//     uid: firebaseUser.uid,
+//     email: firebaseUser.email || "",
+//     displayName: firebaseUser.displayName?.toLowerCase(),
+//     username: firebaseUser.displayName?.replace(/\s+/g, "").toLowerCase().concat(placeHoldForUserName),
+//     photoURL: firebaseUser.photoURL || "https://picsum.photos/200",
+//     provider : "google",  // Explicitly typed to match MainUserObject
+//     isEmailVerified: firebaseUser.emailVerified,
+//     createdAt: firebaseUser.metadata.creationTime ? formatDate(new Date(firebaseUser.metadata.creationTime)) : formatDate(new Date()),
+//     lastLoginAt: firebaseUser.metadata.lastSignInTime ? formatDate(new Date(firebaseUser.metadata.lastSignInTime)) : formatDate(new Date()),
+//     timezone : data.timezone,
+//     countryCode : data.countryCode,
+//     customData: {
+//       streak: 0,
+//       goals : [],
+//       days: []
+//     },
+//   };
+
+//   console.log("Main user object",MainUserObject)
+
+//   return MainUserObject;
+// };
+
+
+// const mapFirebaseUserToMainUserObjectForEmail = async (
+//   firebaseUser: FirebaseUser,
+//   userName: string,
+//   name: string
+// ): Promise<MainUserObject> => {
+
+//   const data = getTimeZoneAndCountryCode()
+
+//   const MainUserObject: MainUserObject = {
+//     uid: firebaseUser.uid,
+//     email: firebaseUser.email || "",
+//     displayName: name,
+//     username: userName,
+//     photoURL: firebaseUser.photoURL || `https://picsum.photos/seed/${firebaseUser.uid}/200`,
+//     provider : "email",  // Explicitly typed to match MainUserObject
+//     isEmailVerified: firebaseUser.emailVerified,
+//     createdAt: firebaseUser.metadata.creationTime ? formatDate(new Date(firebaseUser.metadata.creationTime)) : formatDate(new Date()),
+//     lastLoginAt: firebaseUser.metadata.lastSignInTime ? formatDate(new Date(firebaseUser.metadata.lastSignInTime)) : formatDate(new Date()),
+//     timezone : data.timezone,
+//     countryCode : data.countryCode,
+//     customData: {
+//       streak: 0,
+//       goals:[],
+//       days:[]
+//     },
+//   };
+
+//   console.log("Main user object",MainUserObject)
+
+//   return MainUserObject;
+// };
